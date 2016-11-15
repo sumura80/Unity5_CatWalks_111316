@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     float walkForce = 50.0f; //歩く速さの設定
     float maxWalkSpeed = 2.0f; //歩くのが早すぎないようにするための限度設定
     Animator animator; //animationを使えるように変数にしておく
+    public AudioClip coins;
+    public AudioClip bombs;
+    AudioSource aud;
     // Use this for initialization
     void Start()
     {
@@ -17,6 +20,7 @@ public class PlayerController : MonoBehaviour
 
         //animatorを操作できるようにコンポーナントを取得する
         this.animator = GetComponent<Animator>();
+        this.aud = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -85,8 +89,15 @@ public class PlayerController : MonoBehaviour
     //Treasure box とのあたり判定をつけるために、OnTriggerEnter2Dを追加
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("ゴール");
-        SceneManager.LoadScene("ClearScene");
+        if (other.gameObject.tag == "treasure")
+        {
+            Debug.Log("ゴール");
+            SceneManager.LoadScene("ClearScene"); 
+        } else if (other.gameObject.tag == "coins") {
+            Debug.Log("you got a coin");
+            this.aud.PlayOneShot(this.coins);
+            Destroy(other.gameObject);
+        }
     }
 
 }
