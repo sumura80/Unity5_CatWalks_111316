@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     Animator animator; //animationを使えるように変数にしておく
     public AudioClip coins;
     public AudioClip bombs;
+    public AudioClip birds;
     AudioSource aud;
     // Use this for initialization
     void Start()
@@ -98,6 +99,16 @@ public class PlayerController : MonoBehaviour
             this.aud.PlayOneShot(this.coins);
             Destroy(other.gameObject);
         }
+        else if (other.gameObject.tag == "bombs"){
+            Debug.Log(" Ouch!! explosion!!");
+            this.aud.PlayOneShot(this.bombs);
+            Destroy(other.gameObject);
+        } else if (other.gameObject.tag == "birds"){
+            Debug.Log(" Baaaaarr!");
+            this.aud.PlayOneShot(this.birds);
+          }//End of IF statement
+
+
     }
 
 }
